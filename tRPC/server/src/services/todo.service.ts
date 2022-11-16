@@ -1,4 +1,4 @@
-import { Todo, TodoInput, TodoUpdate } from "../interfaces/todo";
+import { Todo, TodoInput } from "../interfaces/todo";
 
 let todos: Todo[] = [
   {
@@ -32,18 +32,18 @@ const createTodo = (todoInput: TodoInput): Todo => {
   return newTodo;
 };
 
-const updateTodo = (id: number, todoUpdate: TodoUpdate): Todo => {
+const updateTodo = (todoUpdate: Todo): Todo => {
   const updatedTodo: Todo = {
-    id: id,
+    id: todoUpdate.id,
     title: todoUpdate.title,
     isDone: todoUpdate.isDone,
   };
-  const index = todos.findIndex((element) => element.id === id);
+  const index = todos.findIndex((element) => element.id === todoUpdate.id);
   todos.splice(index, 1, updatedTodo);
   return updatedTodo;
 };
 
-const deleteTodoById = (id: number) => {
+const deleteTodoById = (id: number): Todo | undefined => {
   const todoToDelete = todos.find((element) => element.id === id);
   todos = todos.filter((element) => element.id !== id);
   return todoToDelete;

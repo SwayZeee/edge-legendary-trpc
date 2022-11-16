@@ -43,10 +43,8 @@ function App() {
     updateTodoMutation.mutate(
       {
         id: todo.id,
-        todoUpdate: {
-          title: todo.title,
-          isDone: !todo.isDone,
-        },
+        title: todo.title,
+        isDone: !todo.isDone,
       },
       {
         onSuccess: () => refetch(),

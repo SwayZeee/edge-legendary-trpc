@@ -5,6 +5,7 @@ import express from "express";
 import cors from "cors";
 import { z } from "zod";
 import TodoService from "./services/todo.service";
+import { ZTodo, ZTodoInput } from "./interfaces/todo";
 
 const createContext = ({
   req,
@@ -19,26 +20,14 @@ export const appRouter = t.router({
   todos: t.procedure.query(() => {
     return TodoService.getTodos();
   }),
-  createTodo: t.procedure
-    .input(z.object({ title: z.string() }))
-    .mutation((req) => {
-      return TodoService.createTodo({
-        title: req.input.title,
-      });
-    }),
-  updateTodo: t.procedure
-    .input(
-      z.object({
-        id: z.number(),
-        todoUpdate: z.object({
-          title: z.string(),
-          isDone: z.boolean(),
-        }),
-      })
-    )
-    .mutation((req) => {
-      return TodoService.updateTodo(req.input.id, req.input.todoUpdate);
-    }),
+  createTodo: t.procedure.input(ZTodoInput).mutation((req) => {
+    return TodoService.createTodo({
+      title: req.input.title,
+    });
+  }),
+  updateTodo: t.procedure.input(ZTodo).mutation((req) => {
+    return TodoService.updateTodo(req.input);
+  }),
   deleteTodo: t.procedure
     .input(z.object({ id: z.number() }))
     .mutation((req) => {
