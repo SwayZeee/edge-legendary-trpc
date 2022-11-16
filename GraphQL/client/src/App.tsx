@@ -63,7 +63,17 @@ function App() {
     setInputNewTodo(value);
   };
 
-  const { data, refetch } = useQuery(GET_ALL_TODOS);
+  interface Todo {
+    id: string;
+    title: string;
+    isDone: boolean;
+  }
+
+  interface TodoData {
+    todos: Todo[];
+  }
+
+  const { data, refetch } = useQuery<TodoData>(GET_ALL_TODOS);
   const [addTodo] = useMutation(ADD_TODO);
   const [updateTodo] = useMutation(UPDATE_TODO);
   const [deleteTodo] = useMutation(DELETE_TODO);
